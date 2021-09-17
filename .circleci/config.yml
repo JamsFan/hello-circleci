@@ -37,6 +37,10 @@ workflows:
   one_and_two:
     jobs:
       - one
-      - two:
+      - hold:
+          type: approval
           requires:
             - one
+      - two:
+          requires:
+            - hold
