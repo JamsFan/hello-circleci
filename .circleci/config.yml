@@ -6,7 +6,7 @@ jobs:
       - image: circleci/node:14.17-browsers
     steps:
       - checkout
-      - run
+      - run:
           name: "Setup custom environment variables"
           command: echo 'export MY_ENV_VAR="FOO"' >> $BASH_ENV
       - run:
