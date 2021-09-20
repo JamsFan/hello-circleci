@@ -1,32 +1,20 @@
-version: 2.1
-
+version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:14.17-browsers
+      - image: python:3.6.3-jessie
+    working-directory: /tmp
     steps:
-      - checkout
       - run:
-          name: "Setup custom environment variables"
-          command: echo 'export MY_ENV_VAR="FOO"' >> $BASH_ENV
-      - run:
-          name: "What branch am I on?"
-          command: echo ${CIRCLE_BRANCH}
-      - run:
-          name: "What branch am I on now?"
-          command: echo $CIRCLE_BRANCH
-      - run:
-          name: "What was my custom environment variable?"
-          command: echo ${MY_ENV_VAR}
-      - run:
-          name: "Print an env var stored in the Project"
-          command: echo ${PROJECT_ENV_VAR}
-      - run:
-          name: "Print an env var stored in a Context"
-          command: echo ${CONTEXT_ENV_VAR}
+          name: Creating Dummy Artifacts
+          commands: |
+            echo "my artifact file" > /tmp/artifact-1;
+            mkdir /tmp/artifacts;
+            echo "my artifact files in a dir" > /tmp/artifacts/artifact-2;
+            
+      - store-artifacts:
+          path: /tmp/artifact-1
+          destination: artifact-file
 
-workflows:
-  build:
-    jobs:
-      - build:
-          context: Testing-Env-Vars
+      - store-artifacts:
+          path: /tmp/artifacts
